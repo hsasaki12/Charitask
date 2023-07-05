@@ -36,5 +36,7 @@ docker-compose build
 ※ DcokerfileやGemfileの設定を書き換えたいときの操作
 
 
+
 メモ：
-・DockerfileはWEB(nginx), APP(Rails), DB(MySQL)それぞれで作成した方がセキュリティ上好ましい模様
+・DockerfileはWEB(nginx), APP(Rails), DB(MySQL)それぞれで作成した方がセキュリティ上好ましい模様。
+・Git：Pushする時はsrcディレクトリ内にある.gitファイルを削除して、ルートディレクトでgitinitする必要がある。
