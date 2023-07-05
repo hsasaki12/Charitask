@@ -1,0 +1,40 @@
+手順①
+docker-compose run app rails new . --force --database=mysql
+# Gemfileとプロジェクトを作成
+
+手順②
+sudo chmod -R 777 $pwd/Project/src/db/mysql_data/
+# 権限付与
+
+手順③
+docker-compose run app rails new . --force --database=mysql
+# Gemfileとプロジェクトを作成
+
+手順④
+docker-compose build
+# Gemfileが上書きされているので、buildしなおす
+
+手順⑤
+sudo chmod 666 $pwd/Project/src/config/database.yml
+# 権限が付与されていないので、権限を付与
+
+手順⑥
+vim src/config/database.yml
+# database.ymlを書き換える
+# password,host,を更新する　※docker-compose.ymlに記載した内容に合わせる
+
+手順⑦
+docker-compose run app rails db:create
+※コンテナ内でデータベースを作成する
+
+
+その他の操作
+docker-compose exec app /bin/bash
+※ コンテナ内でbash操作したい場合
+
+docker-compose build
+※ DcokerfileやGemfileの設定を書き換えたいときの操作
+
+
+メモ：
+・DockerfileはWEB(nginx), APP(Rails), DB(MySQL)それぞれで作成した方がセキュリティ上好ましい模様
