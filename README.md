@@ -11,7 +11,7 @@
 ### 開発環境、インフラ
 - Docker/docker-compose
 - MySQL(8.0)
-- CircleCI
+- GitHub Actions 
 - Puma
 - Nginx
 - AWS　※予定
