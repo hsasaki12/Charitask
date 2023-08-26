@@ -1,0 +1,23 @@
+# .rubocop.yml
+require:
+  - rubocop-rails
+  - rubocop-capybara
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+Metrics/MethodLength:
+  Max: 20
+
+Layout/LineLength:
+  Max: 160
+
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable  # または 'disable'
+
+Style/Documentation:
+  Enabled: false
