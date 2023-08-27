@@ -1,0 +1,56 @@
+<h1>New Quest</h1>
+
+<%= form_with(model: @quest, local: true) do |f| %>
+
+  <% if @quest.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quest.errors.count, "error") %> prohibited this quest from being saved:</h2>
+
+      <ul>
+        <% @quest.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :requester_id %>
+    <%= f.number_field :requester_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :acceptor_id %>
+    <%= f.number_field :acceptor_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :category %>
+    <%= f.number_field :category %>
+  </div>
+
+  <div class="field">
+    <%= f.label :status %>
+    <%= f.number_field :status %>
+  </div>
+
+  <div class="field">
+    <%= f.label :difficulty %>
+    <%= f.number_field :difficulty %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Create Quest" %>
+  </div>
+
+<% end %>

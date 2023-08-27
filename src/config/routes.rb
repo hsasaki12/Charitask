@@ -1,16 +1,13 @@
 # frozen_string_literal: true
 
+# config/routes.rb
 Rails.application.routes.draw do
   root 'home#index'
-  resources :quests
+  resources :quests, only: %i[index show new create]
 
-  devise_for :users, skip: %i[sessions registrations]
-
-  as :user do
-    get 'signin', to: 'devise/sessions#new', as: :new_user_session
-    post 'signin', to: 'devise/sessions#create', as: :user_session
-    delete 'signout', to: 'devise/sessions#destroy', as: :destroy_user_session
-    get 'signup', to: 'devise/registrations#new', as: :new_user_registration
-    post 'signup', to: 'devise/registrations#create', as: :user_registration
-  end
+  devise_for :users, path: '', path_names: {
+    sign_in: 'signin',
+    sign_out: 'signout',
+    sign_up: 'signup'
+  }
 end
