@@ -1,0 +1,7 @@
+エラー対応：
+
+事象：Rails7 Deviseのログアウトができない
+内容：ログアウトすると、"Routing Error" "No route matches [GET]"が起きる
+原因：不明　Rails7.0　device（gem）で起こる事象の模様
+対応："link_to" ~> "button_to"に変更
+補足：こちら参照　https://qiita.com/tearofli/items/27474d476a4256cb0c91
