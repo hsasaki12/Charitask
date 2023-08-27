@@ -1,3 +1,6 @@
+初回ローカルサービス立ち上げ手順
+
+--------
 手順①
 docker-compose run app rails new . --force --database=mysql
 # Gemfileとプロジェクトを作成
@@ -26,7 +29,7 @@ vim src/config/database.yml
 手順⑦
 docker-compose run app rails db:create
 ※コンテナ内でデータベースを作成する
-
+--------
 
 その他の操作
 docker-compose exec app /bin/bash
@@ -35,6 +38,8 @@ docker-compose exec app /bin/bash
 docker-compose build
 ※ DcokerfileやGemfileの設定を書き換えたいときの操作
 
+docker-compose exec app bundle exec rubocop -A
+※　rubocopコマンドを実行　"-A"で自動修正モードを有効
 
 
 メモ：

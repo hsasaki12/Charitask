@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  root 'home#index'
+  resources :quests
+
   devise_for :users, skip: %i[sessions registrations]
 
   as :user do

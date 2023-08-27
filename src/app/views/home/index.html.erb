@@ -1,0 +1,15 @@
+<!-- app/views/home/index.html.erb -->
+
+<h1>Welcome to Charitask</h1>
+
+<p>Select a quest based on your skills and interests!</p>
+
+<!-- ログイン/ログアウトボタン -->
+<% if user_signed_in? %>
+  <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+<% else %>
+  <%= link_to 'Login', new_user_session_path %>
+<% end %>
+
+<!-- 依頼ボードへのリンク -->
+<%= link_to 'View Quest Board', quests_path %>
