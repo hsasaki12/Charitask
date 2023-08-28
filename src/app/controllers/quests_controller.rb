@@ -4,6 +4,7 @@
 
 class QuestsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
+  before_action :load_quest_from_session, only: [:confirm]
 
   def index
     @quests = Quest.all
@@ -17,27 +18,22 @@ class QuestsController < ApplicationController
     @quest = Quest.new
   end
 
-  def edit
-    @quest = Quest.find(params[:id])
-  end
-
-  def create
+  def confirm
     @quest = Quest.new(quest_params)
-    if @quest.save
-      # 成功したときの処理
-      redirect_to @quest
+    if @quest.valid?
+      session[:quest_data] = quest_params.to_h
+      render :confirm
     else
-      # 失敗したときの処理
-      render 'new'
+      render :new
     end
   end
 
-  def update
-    @quest = Quest.find(params[:id])
-    if @quest.update(quest_params)
-      redirect_to @quest
+  def create
+    @quest = Quest.new(session.delete(:quest_data))
+    if @quest.save
+      redirect_to complete_quests_path
     else
-      render 'edit'
+      render :new
     end
   end
 
@@ -45,5 +41,9 @@ class QuestsController < ApplicationController
 
   def quest_params
     params.require(:quest).permit(:title, :description, :requester_id, :acceptor_id, :category, :status, :difficulty)
+  end
+
+  def load_quest_from_session
+    @quest = Quest.new(session[:quest_data])
   end
 end
