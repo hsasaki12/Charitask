@@ -1,9 +1,9 @@
-<h1>All Quests</h1>
-
-<%= link_to 'New Quests', new_quest_path %>
-
-<ul>
-  <% @quests.each do |quest| %>
-    <li><%= link_to quest.title, quest_path(quest) %></li>
-  <% end %>
-</ul>
+<div class="container mt-5">
+  <h1 class="mb-4">All Quests</h1>
+  <%= link_to 'New Quest', new_quest_path, class: 'btn btn-primary mb-3' %>
+  <div class="list-group">
+    <% @quests.each do |quest| %>
+      <%= link_to quest.title, quest_path(quest), class: 'list-group-item list-group-item-action' %>
+    <% end %>
+  </div>
+</div>

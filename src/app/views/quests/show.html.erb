@@ -1,12 +1,20 @@
-<h1><%= @quest.title %></h1>
-<p><%= @quest.description %></p>
-<p><%= @quest.requester_id %></p>
-<p><%= @quest.category %></p>
-<p><%= @quest.status %></p>
-<p><%= @quest.difficulty %></p>
-
-
-<!-- 他のフィールドも表示できます -->
-
-<!-- Editへのリンクを追加 -->
-<%= link_to 'Edit', edit_quest_path(@quest) %>
+<div class="container mt-5">
+  <h1 class="mb-4"><%= @quest.title %></h1>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= @quest.title %></h5>
+      <p class="card-text"><%= @quest.description %></p>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Requester ID: <%= @quest.requester_id %></li>
+        <li class="list-group-item">Category: <%= @quest.category %></li>
+        <li class="list-group-item">Status: <%= @quest.status %></li>
+        <li class="list-group-item">Difficulty: <%= @quest.difficulty %></li>
+        <li class="list-group-item">Created at: <%= @quest.created_at %></li>
+        <li class="list-group-item">Updated at: <%= @quest.updated_at %></li>
+      </ul>
+    </div>
+  </div>
+  <div class="mt-4">
+    <%= link_to 'Edit', edit_quest_path(@quest), class: 'btn btn-secondary' %>
+  </div>
+</div>
