@@ -3,7 +3,7 @@
 # config/routes.rb
 Rails.application.routes.draw do
   root 'home#index'
-  resources :quests, only: %i[index show new create]
+  resources :quests, only: %i[index show new create edit update]
 
   devise_for :users, path: '', path_names: {
     sign_in: 'signin',
