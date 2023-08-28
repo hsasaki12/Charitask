@@ -1,0 +1,6 @@
+<%= form_with url: quests_path, local: true do |f| %>
+    <% session[:quest_data].each do |key, value| %>
+      <%= hidden_field_tag "quest[#{key}]", value %>
+    <% end %>
+    <%= f.submit "Create Quest", class: 'btn btn-primary' %>
+  <% end %>

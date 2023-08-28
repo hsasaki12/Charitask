@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <h1>New Quest</h1>
-
-  <%= form_with(model: @quest, local: true, html: { class: 'needs-validation', novalidate: '' }) do |f| %>
+  
+  <%= form_with(model: @quest, url: confirm_quests_path, method: :get, html: { class: 'needs-validation', novalidate: '', 'data-turbo': 'false' }) do |f| %>
     <% if @quest.errors.any? %>
       <div class="alert alert-danger">
         <strong><%= pluralize(@quest.errors.count, "error") %> prohibited this quest from being saved:</strong>
@@ -49,7 +49,7 @@
   </div>
 
   <div class="mb-3">
-    <%= f.submit "Create Quest", class: 'btn btn-primary' %>
+    <%= f.submit "Confirm Quest", class: 'btn btn-primary' %>
   </div>
   <% end %>
 </div>

@@ -1,5 +1,27 @@
 エラー対応：
 
+事象：confirm画面に遷移できない
+内容：confirm画面を新規開発時に発生した事象
+原因：confirmアクションでrender :confirmを使っているため、リダイレクトが発生していないのが問題
+　　　　※TurboDrive（turbo-rails gemが提供する）がフォームのレスポンスでリダイレクトを期待している。
+対応：data-turbo="false"属性をform_withに追加することで、TurboDriveによる非同期処理を無効
+補足：
+エラーログ
+Error: Form responses must redirect to another location
+    at B.requestSucceededWithResponse (turbo.es2017-esm.js:784:27)
+    at H.receive (turbo.es2017-esm.js:546:27)
+    at H.perform (turbo.es2017-esm.js:521:31)
+formSubmissionErrored @ turbo.es2017-esm.js:2406
+requestSucceededWithResponse @ turbo.es2017-esm.js:785
+receive @ turbo.es2017-esm.js:546
+perform @ turbo.es2017-esm.js:521
+await in perform (async)
+start @ turbo.es2017-esm.js:743
+submitForm @ turbo.es2017-esm.js:2346
+formSubmitted @ turbo.es2017-esm.js:3076
+V.submitBubbled @ turbo.es2017-esm.js:951
+
+
 事象：Rails7 Deviseのログアウトができない
 内容：ログアウトすると、"Routing Error" "No route matches [GET]"が起きる
 原因：不明　Rails7.0　device（gem）で起こる事象の模様
