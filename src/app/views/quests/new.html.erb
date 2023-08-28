@@ -1,56 +1,55 @@
-<h1>New Quest</h1>
+<div class="container mt-5">
+  <h1>New Quest</h1>
 
-<%= form_with(model: @quest, local: true) do |f| %>
+  <%= form_with(model: @quest, local: true, html: { class: 'needs-validation', novalidate: '' }) do |f| %>
+    <% if @quest.errors.any? %>
+      <div class="alert alert-danger">
+        <strong><%= pluralize(@quest.errors.count, "error") %> prohibited this quest from being saved:</strong>
+        <ul>
+          <% @quest.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <% if @quest.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@quest.errors.count, "error") %> prohibited this quest from being saved:</h2>
-
-      <ul>
-        <% @quest.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :title %>
-    <%= f.text_field :title %>
+  <div class="mb-3">
+    <%= f.label :title, class: 'form-label' %>
+    <%= f.text_field :title, class: 'form-control', required: '' %>
+  </div>
+  
+  <div class="mb-3">
+    <%= f.label :description, class: 'form-label' %>
+    <%= f.text_area :description, class: 'form-control', rows: 3, required: '' %>
+  </div>
+  
+  <div class="mb-3">
+    <%= f.label :requester_id, class: 'form-label' %>
+    <%= f.number_field :requester_id, class: 'form-control', required: '' %>
   </div>
 
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
-
-  <div class="field">
-    <%= f.label :requester_id %>
-    <%= f.number_field :requester_id %>
-  </div>
-
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :acceptor_id %>
-    <%= f.number_field :acceptor_id %>
+    <%= f.number_field :acceptor_id, class: 'form-control', required: '' %>
   </div>
 
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :category %>
-    <%= f.number_field :category %>
+    <%= f.number_field :category, class: 'form-control', required: '' %>
   </div>
 
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :status %>
-    <%= f.number_field :status %>
+    <%= f.number_field :status, class: 'form-control', required: '' %>
   </div>
 
-  <div class="field">
+  <div class="mb-3">
     <%= f.label :difficulty %>
-    <%= f.number_field :difficulty %>
+    <%= f.number_field :difficulty, class: 'form-control', required: '' %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Create Quest" %>
+  <div class="mb-3">
+    <%= f.submit "Create Quest", class: 'btn btn-primary' %>
   </div>
-
-<% end %>
+  <% end %>
+</div>
