@@ -35,6 +35,9 @@ docker-compose run app rails db:create
 docker-compose exec app /bin/bash
 ※ コンテナ内でbash操作したい場合
 
+docker-compose exec app rails db:seed
+※　テストデータ作成
+
 docker-compose build
 ※ DcokerfileやGemfileの設定を書き換えたいときの操作
 
