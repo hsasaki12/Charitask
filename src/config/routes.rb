@@ -7,8 +7,12 @@ Rails.application.routes.draw do
   resources :quests do
     collection do
       get :confirm
-      post :create
       get :complete
+    end
+
+    member do
+      post :create
+      post :update_confirm
     end
   end
 

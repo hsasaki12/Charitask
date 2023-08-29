@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <h1>Edit Quest</h1>
   
-  <%= form_with(model: @quest, local: true, html: { class: 'needs-validation', novalidate: '' }) do |f| %>
+  <%= form_with(model: @quest, url: update_confirm_quest_path(@quest), method: :post, local: true, html: { class: 'needs-validation', novalidate: '' }, data: { turbo: "false" }) do |f| %>
     <% if @quest.errors.any? %>
       <div class="alert alert-danger">
         <strong><%= pluralize(@quest.errors.count, "error") %> prohibited this quest from being updated:</strong>

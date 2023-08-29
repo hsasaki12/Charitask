@@ -5,7 +5,7 @@
 class QuestsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_quest_from_session, only: [:confirm]
-  before_action :set_quest, only: [:edit, :update, :show] # この行を追加
+  before_action :set_quest, only: %i[edit update show] # この行を追加
 
   def index
     @quests = Quest.all
@@ -29,6 +29,10 @@ class QuestsController < ApplicationController
     end
   end
 
+  def edit
+    @quest = Quest.find(params[:id])
+  end
+
   def create
     @quest = Quest.new(session.delete(:quest_data))
     if @quest.save
@@ -38,18 +42,30 @@ class QuestsController < ApplicationController
     end
   end
 
-  def edit
-    # ここに編集前の処理を書く（通常は空でもよい）
+  def update_confirm
+    @quest = Quest.find(params[:id])
+    @quest.assign_attributes(quest_params) # 更新する属性を割り当てますが、保存はしません。
+
+    if @quest.valid?
+      session[:quest_data] = quest_params.to_h.merge(id: @quest.id) # idも含めてセッションに保存
+      render :confirm
+    else
+      redirect_to edit_quest_path(@quest)
+    end
   end
 
   def update
-    if @quest.update(quest_params)
-      # データが正しく更新された場合
-      redirect_to complete_quests_path # このパスは適当です。実際のリダイレクト先に合わせてください。
+    @quest = Quest.find(params[:id])
+
+    if @quest.update(session.delete(:quest_data))
+      redirect_to complete_quests_path
     else
-      # バリデーションに失敗した場合
       render :edit
     end
+  end
+
+  def complete
+    # ここで何か完了後の処理を行う（通常は空でもよい）
   end
 
   private

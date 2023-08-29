@@ -1,7 +1,7 @@
 <div class="container my-5">
   <h2 class="text-center">Confirm Your Quest</h2>
 
-  <%= form_with url: quests_path, local: true, class: 'mt-4' do |f| %>
+  <%= form_with(model: @quest, url: quest_path(@quest), method: :patch, local: true) do |f| %>
     <% session[:quest_data].each do |key, value| %>
       <%= hidden_field_tag "quest[#{key}]", value %>
     <% end %>
