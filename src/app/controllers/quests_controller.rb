@@ -5,7 +5,7 @@
 class QuestsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_quest_from_session, only: [:confirm]
-  before_action :set_quest, only: %i[edit update show] # この行を追加
+  before_action :set_quest, only: %i[edit update show destroy] # この行を変更
 
   def index
     @quests = Quest.all
@@ -66,6 +66,11 @@ class QuestsController < ApplicationController
 
   def complete
     # ここで何か完了後の処理を行う（通常は空でもよい）
+  end
+
+  def destroy
+    @quest.destroy
+    redirect_to quests_path
   end
 
   private
