@@ -5,6 +5,7 @@
 class QuestsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_quest_from_session, only: [:confirm]
+  before_action :set_quest, only: [:edit, :update, :show] # この行を追加
 
   def index
     @quests = Quest.all
@@ -37,6 +38,20 @@ class QuestsController < ApplicationController
     end
   end
 
+  def edit
+    # ここに編集前の処理を書く（通常は空でもよい）
+  end
+
+  def update
+    if @quest.update(quest_params)
+      # データが正しく更新された場合
+      redirect_to complete_quests_path # このパスは適当です。実際のリダイレクト先に合わせてください。
+    else
+      # バリデーションに失敗した場合
+      render :edit
+    end
+  end
+
   private
 
   def quest_params
@@ -45,5 +60,9 @@ class QuestsController < ApplicationController
 
   def load_quest_from_session
     @quest = Quest.new(session[:quest_data])
+  end
+
+  def set_quest
+    @quest = Quest.find(params[:id]) # この行を追加
   end
 end
