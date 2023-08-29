@@ -34,11 +34,24 @@ class QuestsController < ApplicationController
   end
 
   def create
-    @quest = Quest.new(session.delete(:quest_data))
-    if @quest.save
-      redirect_to complete_quests_path
+    quest_data = session.delete(:quest_data)
+
+    if quest_data['id']
+      # Update existing record
+      @quest = Quest.find(quest_data['id'])
+      if @quest.update(quest_data)
+        redirect_to complete_quests_path
+      else
+        render :edit
+      end
     else
-      render :new
+      # Create new record
+      @quest = Quest.new(quest_data)
+      if @quest.save
+        redirect_to complete_quests_path
+      else
+        render :new
+      end
     end
   end
 
