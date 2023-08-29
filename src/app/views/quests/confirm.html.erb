@@ -1,6 +1,12 @@
-<%= form_with url: quests_path, local: true do |f| %>
+<div class="container my-5">
+  <h2 class="text-center">Confirm Your Quest</h2>
+
+  <%= form_with url: quests_path, local: true, class: 'mt-4' do |f| %>
     <% session[:quest_data].each do |key, value| %>
       <%= hidden_field_tag "quest[#{key}]", value %>
     <% end %>
-    <%= f.submit "Create Quest", class: 'btn btn-primary' %>
+    <div class="text-center">
+      <%= f.submit "Create Quest", class: 'btn btn-primary' %>
+    </div>
   <% end %>
+</div>

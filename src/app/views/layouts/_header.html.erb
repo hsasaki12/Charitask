@@ -1,10 +1,13 @@
 <!-- app/views/layouts/header.html.erb -->
 <div class="header">
-  <h1>Charitask</h1>
+  <h1><%= link_to 'Charitask', root_path, style: "color: white; text-decoration: none;" %></h1>
   <nav>
     <%= link_to 'Home', root_path %>
     <%= link_to 'Quest Board', quests_path %>
-    <!-- その他のリンク -->
+    <% if user_signed_in? %>
+      <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= link_to 'Login', new_user_session_path %>
+    <% end %>
   </nav>
 </div>
-

@@ -1,17 +1,19 @@
 <!-- app/views/home/index.html.erb -->
 
-<h1>Welcome to Charitask</h1>
+<div class="container my-5">
+  <h1 class="text-center">Welcome to Charitask</h1>
 
-<p>Select a quest based on your skills and interests!</p>
+  <p class="lead text-center">Select a quest based on your skills and interests!</p>
 
-<!-- ログイン/ログアウトボタン -->
-<% if user_signed_in? %>
-<!--  <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo: "false" } %> -->
-<!--  なぜか"button_to"にするとログアウト処理がうまく行く -->
-  <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
-<% else %>
-  <%= link_to 'Login', new_user_session_path %>
-<% end %>
+  <div class="text-center my-4">
+    <% if user_signed_in? %>
+      <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
+    <% else %>
+      <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
 
-<!-- 依頼ボードへのリンク -->
-<%= link_to 'View Quest Board', quests_path %>
+  <div class="text-center my-4">
+    <%= link_to 'View Quest Board', quests_path, class: 'btn btn-success' %>
+  </div>
+</div>

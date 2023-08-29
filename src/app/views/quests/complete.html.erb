@@ -1,0 +1,14 @@
+<!-- app/views/quests/completed.html.erb -->
+
+<div class="container my-5">
+  <div class="jumbotron">
+    <h1 class="display-4">Quest Completed!</h1>
+    <p class="lead">Thank you for completing the quest.</p>
+    <hr class="my-4">
+    <p>Would you like to take on another quest or view your completed quests?</p>
+    <div class="text-center my-4">
+      <%= link_to 'Quest Board', quests_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Take on Another Quest', quests_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
