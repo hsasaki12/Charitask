@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # config/routes.rb
 Rails.application.routes.draw do
   root 'home#index'
@@ -15,9 +13,13 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, path: '', path_names: {
-    sign_in: 'signin',
-    sign_out: 'signout',
-    sign_up: 'signup'
-  }
+  # ユーザーのセッションコントローラーのカスタマイズ
+  devise_for :users, controllers: { sessions: 'users/sessions' }
+
+  # もしくは以下のようにパス名をカスタマイズ
+  # devise_for :users, path: '', path_names: {
+  #   sign_in: 'signin',
+  #   sign_out: 'signout',
+  #   sign_up: 'signup'
+  # }
 end

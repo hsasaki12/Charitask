@@ -1,5 +1,3 @@
-<!-- app/views/home/index.html.erb -->
-
 <div class="container my-5">
   <h1 class="text-center">Welcome to Charitask</h1>
 
@@ -10,6 +8,7 @@
       <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
     <% else %>
       <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
+      <%= button_to 'テストユーザーでログイン', new_user_session_path, method: :post, class: 'btn btn-secondary' %>
     <% end %>
   </div>
 
