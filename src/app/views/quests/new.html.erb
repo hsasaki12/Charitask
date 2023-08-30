@@ -13,46 +13,88 @@
       </div>
     <% end %>
 
-  <div class="mb-3">
-    <%= f.label :title, class: 'form-label' %>
-    <%= f.text_field :title, class: 'form-control', required: '' %>
-  </div>
-  
-  <div class="mb-3">
-    <%= f.label :description, class: 'form-label' %>
-    <%= f.text_area :description, class: 'form-control', rows: 3, required: '' %>
-  </div>
-  
-  <!-- requester_id のフィールドを削除 -->
-  <!--
-  <div class="mb-3">
-    <%= f.label :requester_id, class: 'form-label' %>
-    <%= f.number_field :requester_id, class: 'form-control', required: '' %>
-  </div>
-  -->
-  
-  <div class="mb-3">
-    <%= f.label :acceptor_id %>
-    <%= f.number_field :acceptor_id, class: 'form-control', required: '' %>
-  </div>
+    <!-- Title -->
+    <div class="mb-3">
+      <%= f.label :title, 'Title', for: 'title_field', class: 'form-label' %>
+      <%= f.text_field :title, class: 'form-control', required: '', id: 'title_field' %>
+    </div>
 
-  <div class="mb-3">
-    <%= f.label :category %>
-    <%= f.number_field :category, class: 'form-control', required: '' %>
-  </div>
+    <!-- Description -->
+    <div class="mb-3">
+      <%= f.label :description, 'Description', for: 'description_field', class: 'form-label' %>
+      <%= f.text_area :description, class: 'form-control', rows: 3, required: '', id: 'description_field' %>
+    </div>
 
-  <div class="mb-3">
-    <%= f.label :status %>
-    <%= f.number_field :status, class: 'form-control', required: '' %>
-  </div>
+    <!-- Acceptor ID -->
+    <div class="mb-3">
+      <%= f.label :acceptor_id, 'Acceptor ID', for: 'acceptor_id_field', class: 'form-label' %>
+      <%= f.number_field :acceptor_id, class: 'form-control', required: '', id: 'acceptor_id_field' %>
+    </div>
 
-  <div class="mb-3">
-    <%= f.label :difficulty %>
-    <%= f.number_field :difficulty, class: 'form-control', required: '' %>
-  </div>
+    <!-- Category -->
+    <div class="mb-3">
+      <%= f.label :category, 'Category', for: 'category_field', class: 'form-label' %>
+      <%= f.number_field :category, class: 'form-control', required: '', id: 'category_field' %>
+    </div>
 
-  <div class="mb-3">
-    <%= f.submit "Confirm Quest", class: 'btn btn-primary' %>
-  </div>
+    <!-- Status -->
+    <div class="mb-3">
+      <%= f.label :status, 'Status', for: 'status_field', class: 'form-label' %>
+      <%= f.number_field :status, class: 'form-control', required: '', id: 'status_field' %>
+    </div>
+
+    <!-- Difficulty -->
+    <div class="mb-3">
+      <%= f.label :difficulty, 'Difficulty', for: 'difficulty_field', class: 'form-label' %>
+      <%= f.number_field :difficulty, class: 'form-control', required: '', id: 'difficulty_field' %>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mb-3">
+      <%= f.submit "Confirm Quest", class: 'btn btn-primary' %>
+    </div>
+
+    <!-- Autofill Button -->
+    <div class="mb-3">
+      <button type="button" id="auto_fill_button" class="btn btn-secondary">値を自動入力</button>
+      <p>開発用のボタンです。ボタンを押すとフィールドにランダムな値が設定されます。</p>
+      <p>画面更新後に実行可能</p>
+    </div>
+
   <% end %>
 </div>
+
+
+<script>
+// DOMが読み込まれた後に実行される関数を定義
+function setupAutoFillButton() {
+  const autoFillButton = document.getElementById("auto_fill_button");
+  
+  // ボタンがnullでないことを確認
+  if (autoFillButton !== null) {
+    // 既存のイベントリスナーを削除
+    autoFillButton.removeEventListener("click", fillFormFields);
+    
+    // 新しいイベントリスナーを追加
+    autoFillButton.addEventListener("click", fillFormFields);
+  } else {
+    console.error("auto_fill_button not found");
+  }
+}
+
+// フィールドにランダムな値を設定する関数
+function fillFormFields() {
+  document.getElementById('title_field').value = "Sample Title";
+  document.getElementById('description_field').value = "Sample Description";
+  document.getElementById('acceptor_id_field').value = Math.floor(Math.random() * 100);
+  document.getElementById('category_field').value = Math.floor(Math.random() * 5);
+  document.getElementById('status_field').value = Math.floor(Math.random() * 5);
+  document.getElementById('difficulty_field').value = Math.floor(Math.random() * 5);
+}
+
+// 初期設定
+document.addEventListener("DOMContentLoaded", setupAutoFillButton);
+
+// もし画面遷移がAjax等で行われる場合は、遷移後に再度 setupAutoFillButton() を呼び出す必要があります。
+
+</script>
