@@ -5,7 +5,8 @@
 class QuestsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_quest_from_session, only: [:confirm]
-  before_action :set_quest, only: %i[edit update show destroy] # この行を変更
+  before_action :set_quest, only: %i[edit update show destroy update_confirm] # この行を変更
+
 
   def index
     @quests = Quest.all
