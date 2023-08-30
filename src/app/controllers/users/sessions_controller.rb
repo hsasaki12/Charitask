@@ -12,15 +12,15 @@ module Users
     # POST /resource/sign_in
     def create
       # テストユーザーの情報（email）でログイン
-      user = User.find_by(email: 'test@gmail.com')  # ユーザーのemailに適切な値を設定してください
+      user = User.find_by(email: 'test@gmail.com') # ユーザーのemailに適切な値を設定してください
       if user
-        puts "Found user: #{user.email}"  # デバッグ出力を追加
+        Rails.logger.debug { "Found user: #{user.email}" } # デバッグ出力を追加
         sign_in(user)
-        puts "User signed in"
-        redirect_to root_path, notice: 'テストユーザーとしてログインしました。'
+        Rails.logger.debug 'User signed in'
+        redirect_to root_path
       else
-        puts "Test user not found"  # デバッグ出力を追加
-        redirect_to new_user_session_path, alert: 'テストユーザーが見つかりませんでした。'
+        Rails.logger.debug 'Test user not found' # デバッグ出力を追加
+        redirect_to new_user_session_path
       end
     end
 
