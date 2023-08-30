@@ -11,14 +11,14 @@
   <%= javascript_importmap_tags "application" %>
 </head>
 <body>
-  
-  <%= render 'layouts/header' %>
+  <div class="d-flex flex-column min-vh-100">
+    <%= render 'layouts/header' %>
 
-  <main>
-    <%= yield %>
-  </main>
+    <main class="flex-fill">
+      <%= yield %>
+    </main>
 
-  <%= render 'layouts/footer' %>
-
+    <%= render 'layouts/footer' %>
+  </div>
 </body>
 </html>

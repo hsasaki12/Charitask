@@ -1,14 +1,28 @@
 <!-- app/views/layouts/header.html.erb -->
-<div class="header">
-  <h1><%= link_to 'Charitask', root_path, style: "color: white; text-decoration: none;" %></h1>
-  <nav>
-    <%= link_to 'Home', root_path %>
-    <%= link_to 'Quest Board', quests_path %>
-    <% if user_signed_in? %>
-    <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-  <% else %>
-    <%= link_to 'Login', new_user_session_path %>
-  <% end %>
-  
-  </nav>
-</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <%= link_to 'Charitask', root_path, class: "navbar-brand" %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <%= link_to 'Home', root_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Quest Board', quests_path, class: "nav-link" %>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
