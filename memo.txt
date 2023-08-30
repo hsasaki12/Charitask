@@ -44,6 +44,8 @@ docker-compose build
 docker-compose exec app bundle exec rubocop -A
 ※　rubocopコマンドを実行　"-A"で自動修正モードを有効
 
+docker rmi $(docker images -q)
+※　imagesをすべて削除する
 
 メモ：
 ・DockerfileはWEB(nginx), APP(Rails), DB(MySQL)それぞれで作成した方がセキュリティ上好ましい模様。

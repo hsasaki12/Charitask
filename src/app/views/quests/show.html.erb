@@ -6,6 +6,7 @@
       <p class="card-text"><%= @quest.description %></p>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Requester ID: <%= @quest.requester_id %></li>
+        <li class="list-group-item">Acceptor ID: <%= @quest.acceptor_id %></li>
         <li class="list-group-item">Category: <%= @quest.category %></li>
         <li class="list-group-item">Status: <%= @quest.status %></li>
         <li class="list-group-item">Difficulty: <%= @quest.difficulty %></li>
@@ -19,3 +20,4 @@
   <%= button_to 'Delete Quest', quest_path(@quest), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 </div>
 </div>
+
