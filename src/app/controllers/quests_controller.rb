@@ -17,13 +17,15 @@ class QuestsController < ApplicationController
   end
 
   def new
+    session[:is_editing] = false
     @quest = Quest.new
   end
 
   def confirm
     @quest = Quest.new(quest_params)
+    @quest.requester_id = current_user.id # ログインしているユーザーのIDをセット
     if @quest.valid?
-      session[:quest_data] = quest_params.to_h
+      session[:quest_data] = @quest.attributes
       render :confirm
     else
       render :new
@@ -31,35 +33,33 @@ class QuestsController < ApplicationController
   end
 
   def edit
+    session[:is_editing] = true
     @quest = Quest.find(params[:id])
   end
 
   def create
     quest_data = session.delete(:quest_data)
-
-    if quest_data['id']
+  
+    @quest = if quest_data['id']
       # Update existing record
-      @quest = Quest.find(quest_data['id'])
-      if @quest.update(quest_data)
-        redirect_to complete_quests_path
-      else
-        render :edit
-      end
+      Quest.find(quest_data['id'])
     else
       # Create new record
-      @quest = Quest.new(quest_data)
-      if @quest.save
-        redirect_to complete_quests_path
-      else
-        render :new
-      end
+      Quest.new(quest_data)
+    end
+  
+    if @quest.save
+      redirect_to complete_quests_path
+    else
+      render quest_data['id'] ? :edit : :new
     end
   end
 
   def update_confirm
+    Rails.logger.debug "Quest Params: #{quest_params.to_h.merge(id: @quest.id).inspect}"
     @quest = Quest.find(params[:id])
-    @quest.assign_attributes(quest_params) # 更新する属性を割り当てますが、保存はしません。
-
+    @quest.assign_attributes(quest_params)
+    @quest.requester_id = current_user.id # ログインしているユーザーのIDをセット
     if @quest.valid?
       session[:quest_data] = quest_params.to_h.merge(id: @quest.id) # idも含めてセッションに保存
       render :confirm
@@ -69,9 +69,11 @@ class QuestsController < ApplicationController
   end
 
   def update
+    Rails.logger.debug "Session data: #{session[:quest_data].inspect}"
     @quest = Quest.find(params[:id])
-
-    if @quest.update(session.delete(:quest_data))
+  
+    quest_data = session.delete(:quest_data)&.symbolize_keys
+    if quest_data && @quest.update(quest_data)
       redirect_to complete_quests_path
     else
       render :edit

@@ -1,6 +1,13 @@
-<div class="container my-5">
-  <h2 class="text-center">Confirm Your Quest</h2>
-
+<% if session[:is_editing] %>
+  <%= form_with(url: quest_path(@quest), method: :patch, local: true) do |f| %>
+    <% session[:quest_data].each do |key, value| %>
+      <%= hidden_field_tag "quest[#{key}]", value %>
+    <% end %>
+    <div class="text-center">
+      <%= f.submit "Update Quest", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+<% else %>
   <%= form_with(url: quests_path, method: :post, local: true) do |f| %>
     <% session[:quest_data].each do |key, value| %>
       <%= hidden_field_tag "quest[#{key}]", value %>
@@ -9,4 +16,4 @@
       <%= f.submit "Create Quest", class: 'btn btn-primary' %>
     </div>
   <% end %>
-</div>
+<% end %>
