@@ -8,7 +8,7 @@ class QuestsController < ApplicationController
   before_action :set_quest, only: %i[edit update show destroy update_confirm] # この行を変更
 
   def index
-    @quests = Quest.all
+    @quests = Quest.page(params[:page]).per(10) # 1ページあたり10件のクエストを表示
   end
 
   def show

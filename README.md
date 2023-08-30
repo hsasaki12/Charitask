@@ -19,5 +19,5 @@
 - AWS　※予定
 
 ### テスト、静的コード解析
-- Rspec　※予定
+- Rspec
 - Rubocop
