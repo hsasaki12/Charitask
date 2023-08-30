@@ -7,7 +7,6 @@ class QuestsController < ApplicationController
   before_action :load_quest_from_session, only: [:confirm]
   before_action :set_quest, only: %i[edit update show destroy update_confirm] # この行を変更
 
-
   def index
     @quests = Quest.all
   end
@@ -39,15 +38,15 @@ class QuestsController < ApplicationController
 
   def create
     quest_data = session.delete(:quest_data)
-  
+
     @quest = if quest_data['id']
-      # Update existing record
-      Quest.find(quest_data['id'])
-    else
-      # Create new record
-      Quest.new(quest_data)
-    end
-  
+               # Update existing record
+               Quest.find(quest_data['id'])
+             else
+               # Create new record
+               Quest.new(quest_data)
+             end
+
     if @quest.save
       redirect_to complete_quests_path
     else
@@ -56,7 +55,6 @@ class QuestsController < ApplicationController
   end
 
   def update_confirm
-    Rails.logger.debug "Quest Params: #{quest_params.to_h.merge(id: @quest.id).inspect}"
     @quest = Quest.find(params[:id])
     @quest.assign_attributes(quest_params)
     @quest.requester_id = current_user.id # ログインしているユーザーのIDをセット
@@ -69,9 +67,8 @@ class QuestsController < ApplicationController
   end
 
   def update
-    Rails.logger.debug "Session data: #{session[:quest_data].inspect}"
     @quest = Quest.find(params[:id])
-  
+
     quest_data = session.delete(:quest_data)&.symbolize_keys
     if quest_data && @quest.update(quest_data)
       redirect_to complete_quests_path
