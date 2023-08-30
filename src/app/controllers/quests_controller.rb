@@ -8,7 +8,25 @@ class QuestsController < ApplicationController
   before_action :set_quest, only: %i[edit update show destroy update_confirm] # この行を変更
 
   def index
-    @quests = Quest.page(params[:page]).per(10) # 1ページあたり10件のクエストを表示
+    sort_option = params[:sort]
+    @quests = case sort_option
+              when 'oldest'
+                Quest.order(created_at: :asc).page(params[:page]).per(10)
+              when 'title_asc'
+                Quest.order(title: :asc).page(params[:page]).per(10)
+              when 'title_desc'
+                Quest.order(title: :desc).page(params[:page]).per(10)
+              when 'status_asc'
+                Quest.order(status: :asc).page(params[:page]).per(10)
+              when 'status_desc'
+                Quest.order(status: :desc).page(params[:page]).per(10)
+              when 'difficulty_asc'
+                Quest.order(difficulty: :asc).page(params[:page]).per(10)
+              when 'difficulty_desc'
+                Quest.order(difficulty: :desc).page(params[:page]).per(10)
+              else
+                Quest.order(created_at: :desc).page(params[:page]).per(10)
+              end
   end
 
   def show

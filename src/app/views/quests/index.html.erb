@@ -1,12 +1,49 @@
 <div class="container mt-5">
   <h1 class="mb-4">All Quests</h1>
   <%= link_to 'New Quest', new_quest_path, class: 'btn btn-primary mb-3' %>
-  <div class="list-group">
-    <% @quests.each do |quest| %>
-      <%= link_to quest.title, quest_path(quest), class: 'list-group-item list-group-item-action' %>
-    <% end %>
+
+  <div class="btn-group mb-3">
+    <%= link_to 'Newest', quests_path(sort: 'newest'), class: 'btn btn-secondary' %>
+    <%= link_to 'Oldest', quests_path(sort: 'oldest'), class: 'btn btn-secondary' %>
   </div>
-  <div class="pagination mt-3">
-  <%= paginate @quests, theme: 'bootstrap4' %>
-</div>
+
+  <div class="btn-group mb-3">
+    <%= link_to 'Title ↑', quests_path(sort: 'title_asc'), class: 'btn btn-secondary' %>
+    <%= link_to 'Title ↓', quests_path(sort: 'title_desc'), class: 'btn btn-secondary' %>
+    <%= link_to 'Status ↑', quests_path(sort: 'status_asc'), class: 'btn btn-secondary' %>
+    <%= link_to 'Status ↓', quests_path(sort: 'status_desc'), class: 'btn btn-secondary' %>
+    <%= link_to 'Difficulty ↑', quests_path(sort: 'difficulty_asc'), class: 'btn btn-secondary' %>
+    <%= link_to 'Difficulty ↓', quests_path(sort: 'difficulty_desc'), class: 'btn btn-secondary' %>
+    <%= link_to 'Updated ↑', quests_path(sort: 'updated_asc'), class: 'btn btn-secondary' %>
+    <%= link_to 'Updated ↓', quests_path(sort: 'updated_desc'), class: 'btn btn-secondary' %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Difficulty</th>
+          <th>Requester</th>
+          <th>Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @quests.each do |quest| %>
+          <tr>
+            <td><%= link_to quest.title, quest_path(quest) %></td>
+            <td><span class="badge badge-primary"><%= quest.status %></span></td>
+            <td><span class="badge badge-success"><%= quest.difficulty %></span></td>
+            <td><span class="badge badge-info"><%= quest.requester_id %></span></td>
+            <td><span class="badge badge-secondary"><%= quest.updated_at.strftime('%Y/%m/%d') %></span></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination mt-3 justify-content-center">
+    <%= paginate @quests, theme: 'bootstrap4' %>
+  </div>
 </div>
