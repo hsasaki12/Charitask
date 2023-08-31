@@ -3,6 +3,8 @@
 # config/routes.rb
 Rails.application.routes.draw do
   root 'home#index'
+  devise_for :users, controllers: { sessions: 'users/sessions' }
+
 
   resources :quests do
     collection do
@@ -14,14 +16,4 @@ Rails.application.routes.draw do
       post :update_confirm
     end
   end
-
-  # ユーザーのセッションコントローラーのカスタマイズ
-  devise_for :users, controllers: { sessions: 'users/sessions' }
-
-  # もしくは以下のようにパス名をカスタマイズ
-  # devise_for :users, path: '', path_names: {
-  #   sign_in: 'signin',
-  #   sign_out: 'signout',
-  #   sign_up: 'signup'
-  # }
 end
