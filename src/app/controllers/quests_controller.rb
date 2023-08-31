@@ -5,33 +5,24 @@
 class QuestsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_quest_from_session, only: [:confirm]
-  before_action :set_quest, only: %i[edit update show destroy update_confirm] # この行を変更
+  before_action :set_quest, only: %i[edit update show destroy update_confirm]
+
+  SORT_OPTIONS = {
+    'oldest' => { created_at: :asc },
+    'title_asc' => { title: :asc },
+    'title_desc' => { title: :desc },
+    'status_asc' => { status: :asc },
+    'status_desc' => { status: :desc },
+    'difficulty_asc' => { difficulty: :asc },
+    'difficulty_desc' => { difficulty: :desc }
+  }.freeze
 
   def index
-    sort_option = params[:sort]
-    @quests = case sort_option
-              when 'oldest'
-                Quest.order(created_at: :asc).page(params[:page]).per(10)
-              when 'title_asc'
-                Quest.order(title: :asc).page(params[:page]).per(10)
-              when 'title_desc'
-                Quest.order(title: :desc).page(params[:page]).per(10)
-              when 'status_asc'
-                Quest.order(status: :asc).page(params[:page]).per(10)
-              when 'status_desc'
-                Quest.order(status: :desc).page(params[:page]).per(10)
-              when 'difficulty_asc'
-                Quest.order(difficulty: :asc).page(params[:page]).per(10)
-              when 'difficulty_desc'
-                Quest.order(difficulty: :desc).page(params[:page]).per(10)
-              else
-                Quest.order(created_at: :desc).page(params[:page]).per(10)
-              end
+    sort_option = SORT_OPTIONS[params[:sort]] || { created_at: :desc }
+    @quests = Quest.order(sort_option).page(params[:page]).per(10)
   end
 
-  def show
-    @quest = Quest.find(params[:id])
-  end
+  def show; end
 
   def new
     session[:is_editing] = false
@@ -39,8 +30,8 @@ class QuestsController < ApplicationController
   end
 
   def confirm
-    @quest = Quest.new(quest_params)
-    @quest.requester_id = current_user.id # ログインしているユーザーのIDをセット
+    @quest.assign_attributes(quest_params)
+    @quest.requester_id = current_user.id
     if @quest.valid?
       session[:quest_data] = @quest.attributes
       render :confirm
@@ -51,46 +42,30 @@ class QuestsController < ApplicationController
 
   def edit
     session[:is_editing] = true
-    @quest = Quest.find(params[:id])
   end
 
   def create
-    quest_data = session.delete(:quest_data)
-
-    @quest = if quest_data['id']
-               # Update existing record
-               Quest.find(quest_data['id'])
-             else
-               # Create new record
-               Quest.new(quest_data)
-             end
-
+    @quest = Quest.new(session.delete(:quest_data)&.symbolize_keys)
     if @quest.save
       redirect_to complete_quests_path
     else
-      render quest_data['id'] ? :edit : :new
+      render :new
     end
   end
 
   def update_confirm
-    Rails.logger.debug { "Quest Params: #{quest_params.to_h.merge(id: @quest.id).inspect}" }
-    @quest = Quest.find(params[:id])
     @quest.assign_attributes(quest_params)
-    @quest.requester_id = current_user.id # ログインしているユーザーのIDをセット
+    @quest.requester_id = current_user.id
     if @quest.valid?
-      session[:quest_data] = quest_params.to_h.merge(id: @quest.id) # idも含めてセッションに保存
+      session[:quest_data] = @quest.attributes
       render :confirm
     else
-      redirect_to edit_quest_path(@quest)
+      render :edit
     end
   end
 
   def update
-    Rails.logger.debug { "Session data: #{session[:quest_data].inspect}" }
-    @quest = Quest.find(params[:id])
-
-    quest_data = session.delete(:quest_data)&.symbolize_keys
-    if quest_data && @quest.update(quest_data)
+    if @quest.update(session.delete(:quest_data)&.symbolize_keys)
       redirect_to complete_quests_path
     else
       render :edit
@@ -98,7 +73,7 @@ class QuestsController < ApplicationController
   end
 
   def complete
-    # ここで何か完了後の処理を行う（通常は空でもよい）
+    # Completion logic here if necessary
   end
 
   def destroy
@@ -113,10 +88,10 @@ class QuestsController < ApplicationController
   end
 
   def load_quest_from_session
-    @quest = Quest.new(session[:quest_data])
+    @quest = Quest.new(session[:quest_data]&.symbolize_keys)
   end
 
   def set_quest
-    @quest = Quest.find(params[:id]) # この行を追加
+    @quest = Quest.find(params[:id])
   end
 end
