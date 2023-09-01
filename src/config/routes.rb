@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
     member do
       post :update_confirm
+      post 'accept', to: 'status#accept'
     end
   end
 end
