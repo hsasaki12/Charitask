@@ -18,6 +18,7 @@
 <div class="mt-4">
   <%= link_to 'Edit', edit_quest_path(@quest), class: 'btn btn-secondary' %>
   <%= button_to 'Delete Quest', quest_path(@quest), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  <%= button_to '受注する', accept_quest_path(@quest), method: :post %>
 </div>
 </div>
 
