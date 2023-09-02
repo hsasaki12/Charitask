@@ -31,10 +31,10 @@
       <%= f.number_field :category, class: 'form-control', required: '', id: 'category_field' %>
     </div>
 
-    <!-- Difficulty -->
+    <!-- difficultyの編集 -->
     <div class="mb-3">
-      <%= f.label :difficulty, 'Difficulty', for: 'difficulty_field', class: 'form-label' %>
-      <%= f.number_field :difficulty, class: 'form-control', required: '', id: 'difficulty_field' %>
+      <%= f.label :difficulty, 'Difficulty', class: 'form-label' %>
+      <%= f.select :difficulty, Quest.difficulties.keys.map { |d| [quest_difficulty_i18n(OpenStruct.new(difficulty: d)), d] }, {}, { class: 'form-control' } %>
     </div>
 
     <!-- Submit Button -->
@@ -75,7 +75,12 @@ function fillFormFields() {
   document.getElementById('title_field').value = "Sample Title";
   document.getElementById('description_field').value = "Sample Description";
   document.getElementById('category_field').value = Math.floor(Math.random() * 5);
-  document.getElementById('difficulty_field').value = Math.floor(Math.random() * 5);
+
+  // difficultyの選択肢が"G", "F", "E", "D", "C", "B", "A"として設定
+  const difficulties = ["G", "F", "E", "D", "C", "B", "A"];
+  const randomDifficulty = difficulties[Math.floor(Math.random() * difficulties.length)];
+
+  document.getElementById('difficulty_field').value = randomDifficulty;
 }
 
 // 初期設定

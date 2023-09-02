@@ -6,7 +6,7 @@ class StatusController < ApplicationController
   before_action :set_quest
 
   def accept
-    if @quest.update(acceptor_id: current_user.id, status: '受注済み')
+    if @quest.update(acceptor_id: current_user.id, status: '実行前')
       redirect_to "/quests/#{@quest.id}/messages", notice: 'Questを受注しました。'
     else
       # エラーハンドリング...

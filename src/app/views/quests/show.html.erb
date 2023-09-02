@@ -16,12 +16,14 @@
     </div>
   </div>
   <div class="mt-4">
+  <% if current_user.id == @quest.requester_id %>
     <%= link_to 'Edit', edit_quest_path(@quest), class: 'btn btn-secondary' %>
     <%= button_to 'Delete Quest', quest_path(@quest), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-    <% unless current_user.id == @quest.requester_id %>
-      <%= button_to '受注する', accept_quest_path(@quest), method: :post %>
-    <% end %>
-    <!-- メッセージ画面に遷移するボタン -->
-    <%= link_to 'Go to Messages', quest_messages_path(@quest), class: 'btn btn-primary' %>
-  </div>
+  <% end %>
+  <% unless current_user.id == @quest.requester_id || @quest.acceptor_id.present? %>
+    <%= button_to '受注する', accept_quest_path(@quest), method: :post %>
+  <% end %>
+  <!-- メッセージ画面に遷移するボタン -->
+  <%= link_to 'Go to Messages', quest_messages_path(@quest), class: 'btn btn-primary' %>
 </div>
+
