@@ -1,4 +1,26 @@
-<h1>My Account</h1>
+<!-- app/views/users/userpage.html.erb -->
 
-<p>Name: <%= @user.name %></p>
-<p>Email: <%= @user.email %></p>
+<div class="container">
+  <h1>Your User Page</h1>
+
+  <h2>Created Quests</h2>
+  <ul>
+    <% @created_quests.each do |quest| %>
+      <li><%= link_to quest.title, quest_path(quest) %></li>
+    <% end %>
+  </ul>
+
+  <h2>Accepted Quests</h2>
+  <ul>
+    <% @accepted_quests.each do |quest| %>
+      <li><%= link_to quest.title, quest_path(quest) %></li>
+    <% end %>
+  </ul>
+
+  <h2>Messaged Quests</h2>
+  <ul>
+    <% @messaged_quests.each do |quest| %>
+      <li><%= link_to quest.title, quest_messages_path(quest) %></li> <!-- この行を修正 -->
+    <% end %>
+  </ul>
+</div>
