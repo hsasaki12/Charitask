@@ -2,8 +2,10 @@
 
 # config/routes.rb
 Rails.application.routes.draw do
+  get 'accounts/show'
   root 'home#index'
   devise_for :users, controllers: { sessions: 'users/sessions' }
+  get 'account', to: 'accounts#show', as: 'account'
 
   resources :quests do
     collection do
