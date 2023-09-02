@@ -12,7 +12,16 @@ module Users
     # POST /resource/sign_in
     def create
       if params[:test_user]
-        user = User.find_by(email: 'test@gmail.com')
+        test_email = case params[:test_user]
+                     when 'true'
+                       'test@gmail.com'
+                     when 'test1'
+                       'test1@gmail.com'
+                     else
+                       nil
+                     end
+    
+        user = User.find_by(email: test_email) if test_email
         if user
           sign_in(user)
           redirect_to root_path

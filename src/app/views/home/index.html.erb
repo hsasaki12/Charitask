@@ -8,7 +8,8 @@
       <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
     <% else %>
       <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
-      <%= button_to 'テストユーザーでログイン', new_user_session_path(test_user: true), method: :post, class: 'btn btn-secondary' %>
+      <%= button_to 'テストユーザーでログイン①', new_user_session_path(test_user: true), method: :post, class: 'btn btn-secondary' %>
+      <%= button_to 'テストユーザーでログイン②', new_user_session_path(test_user: 'test1'), method: :post, class: 'btn btn-secondary' %>
     <% end %>
   </div>
 
