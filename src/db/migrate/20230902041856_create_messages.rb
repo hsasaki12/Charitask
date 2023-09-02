@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/XXXXXXXX_create_messages.rb
 
 class CreateMessages < ActiveRecord::Migration[7.0]

@@ -11,4 +11,6 @@ class Quest < ApplicationRecord
   validates :category, presence: true
   validates :status, presence: true
   validates :difficulty, presence: true
+  
+  enum status: { 未着手: 0, 実行前: 1, 処理中: 2, 終了確認: 3, 終了: 4 }
 end
