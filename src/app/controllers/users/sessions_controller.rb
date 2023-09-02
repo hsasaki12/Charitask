@@ -17,10 +17,8 @@ module Users
                        'test@gmail.com'
                      when 'test1'
                        'test1@gmail.com'
-                     else
-                       nil
                      end
-    
+
         user = User.find_by(email: test_email) if test_email
         if user
           sign_in(user)

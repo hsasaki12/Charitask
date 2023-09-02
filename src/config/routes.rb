@@ -12,12 +12,12 @@ Rails.application.routes.draw do
       get :confirm
       get :complete
     end
-  
+
     member do
       post :update_confirm
       post 'accept', to: 'status#accept'
     end
-  
-    resources :messages, only: [:index, :create]
+
+    resources :messages, only: %i[index create]
   end
 end

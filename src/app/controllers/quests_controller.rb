@@ -26,12 +26,14 @@ class QuestsController < ApplicationController
 
   def new
     session[:is_editing] = false
-    @quest = Quest.new
+    @quest = Quest.new(status: 0) # 未着手の場合は0
   end
 
   def confirm
     @quest.assign_attributes(quest_params)
     @quest.requester_id = current_user.id
+    @quest.status = 0  # 未着手の場合は0
+  
     if @quest.valid?
       session[:quest_data] = @quest.attributes
       render :confirm
@@ -45,7 +47,11 @@ class QuestsController < ApplicationController
   end
 
   def create
-    @quest = Quest.new(session.delete(:quest_data)&.symbolize_keys)
+    quest_data = session.delete(:quest_data)&.symbolize_keys
+    quest_data&.delete(:id)  # IDを削除
+    @quest = Quest.new(quest_data)
+    @quest.status ||= 0  # 未着手の場合は0
+    
     if @quest.save
       redirect_to complete_quests_path
     else
@@ -84,7 +90,7 @@ class QuestsController < ApplicationController
   private
 
   def quest_params
-    params.require(:quest).permit(:title, :description, :requester_id, :acceptor_id, :category, :status, :difficulty)
+    params.require(:quest).permit(:title, :description, :requester_id, :acceptor_id, :category, :difficulty)
   end
 
   def load_quest_from_session

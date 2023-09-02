@@ -31,12 +31,6 @@
       <%= f.number_field :category, class: 'form-control', required: '', id: 'category_field' %>
     </div>
 
-    <!-- Status -->
-    <div class="mb-3">
-      <%= f.label :status, 'Status', for: 'status_field', class: 'form-label' %>
-      <%= f.number_field :status, class: 'form-control', required: '', id: 'status_field' %>
-    </div>
-
     <!-- Difficulty -->
     <div class="mb-3">
       <%= f.label :difficulty, 'Difficulty', for: 'difficulty_field', class: 'form-label' %>
@@ -81,7 +75,6 @@ function fillFormFields() {
   document.getElementById('title_field').value = "Sample Title";
   document.getElementById('description_field').value = "Sample Description";
   document.getElementById('category_field').value = Math.floor(Math.random() * 5);
-  document.getElementById('status_field').value = Math.floor(Math.random() * 5);
   document.getElementById('difficulty_field').value = Math.floor(Math.random() * 5);
 }
 

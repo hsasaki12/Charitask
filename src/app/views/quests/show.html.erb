@@ -8,7 +8,7 @@
         <li class="list-group-item">Requester ID: <%= @quest.requester_id %></li>
         <li class="list-group-item">Acceptor ID: <%= @quest.acceptor_id %></li>
         <li class="list-group-item">Category: <%= @quest.category %></li>
-        <li class="list-group-item">Status: <%= @quest.status %></li>
+        <li class="list-group-item">Status: <%= quest_status_i18n(@quest) %></li>
         <li class="list-group-item">Difficulty: <%= @quest.difficulty %></li>
         <li class="list-group-item">Created at: <%= @quest.created_at %></li>
         <li class="list-group-item">Updated at: <%= @quest.updated_at %></li>
