@@ -90,7 +90,9 @@ class QuestsController < ApplicationController
   private
 
   def quest_params
-    params.require(:quest).permit(:title, :description, :requester_id, :acceptor_id, :category, :difficulty)
+    raw_params = params.require(:quest).permit(:title, :description, :requester_id, :acceptor_id, :category, :difficulty)
+    raw_params[:difficulty] = raw_params[:difficulty].to_i if raw_params[:difficulty].present?
+    raw_params
   end
 
   def load_quest_from_session

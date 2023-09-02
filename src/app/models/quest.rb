@@ -13,4 +13,7 @@ class Quest < ApplicationRecord
   validates :difficulty, presence: true
   
   enum status: { 未着手: 0, 実行前: 1, 処理中: 2, 終了確認: 3, 終了: 4 }
+  enum difficulty: { G: 0, F: 1, E: 2, D: 3, C: 4, B: 5, A: 6 }
+
+
 end
