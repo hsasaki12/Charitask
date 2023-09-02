@@ -9,6 +9,7 @@
       <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %>
       <%= button_to 'テストユーザーでログイン①', new_user_session_path(test_user: true), method: :post, class: 'btn btn-secondary' %>
       <%= button_to 'テストユーザーでログイン②', new_user_session_path(test_user: 'test1'), method: :post, class: 'btn btn-secondary' %>
+      <%= button_to 'テストユーザーでログイン③', new_user_session_path(test_user: 'test2'), method: :post, class: 'btn btn-secondary' %>
     <% end %>
   </div>
 

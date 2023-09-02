@@ -17,6 +17,8 @@ module Users
                        'test@gmail.com'
                      when 'test1'
                        'test1@gmail.com'
+                      when 'test2'
+                        'test2@gmail.com'
                      end
 
         user = User.find_by(email: test_email) if test_email
