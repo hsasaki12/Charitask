@@ -1,0 +1,14 @@
+<!-- app/views/messages/index.html.erb -->
+
+<div class="container">
+  <h1>Messages for <%= @quest.title %></h1>
+  <div>
+    <% @messages.each do |message| %>
+      <p><strong><%= message.sender.email %>:</strong> <%= message.content %></p>
+    <% end %>
+  </div>
+  <%= form_with(model: [ @quest, @message ]) do |form| %>
+    <%= form.text_area :content %>
+    <%= form.submit "Send" %>
+  <% end %>
+</div>

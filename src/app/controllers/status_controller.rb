@@ -7,11 +7,9 @@ class StatusController < ApplicationController
 
   def accept
     if @quest.update(acceptor_id: current_user.id, status: '受注済み')
-      # 何らかの成功処理（リダイレクト、通知、etc.）
-      redirect_to quest_path(@quest), notice: 'Questを受注しました。'
+      redirect_to "/quests/#{@quest.id}/messages", notice: 'Questを受注しました。'
     else
-      # エラーハンドリング
-      redirect_to quest_path(@quest), alert: 'Questの受注に失敗しました。'
+      # エラーハンドリング...
     end
   end
 
