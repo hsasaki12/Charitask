@@ -1,6 +1,32 @@
 <!-- app/views/messages/index.html.erb -->
 <div class="container">
   <h1>Messages for <%= @quest.title %></h1>
+  <p>Current Status: <%= @quest.status %></p>
+  
+  
+  <!-- ステータス更新用のボタン -->
+  <% if current_user.id == @quest.acceptor_id && ['実行前', '処理中'].include?(@quest.status) %>
+    <%= form_with(url: update_status_quest_messages_path(quest_id: @quest.id), method: :post) do |form| %>
+      <%= form.hidden_field :new_status, value: "処理中" %>
+      <%= form.submit "Change status to 処理中" %>
+    <% end %>
+    <%= form_with(url: update_status_quest_messages_path(quest_id: @quest.id), method: :post) do |form| %>
+      <%= form.hidden_field :new_status, value: "終了確認" %>
+      <%= form.submit "Change status to 終了確認" %>
+    <% end %>
+  <% elsif current_user.id == @quest.requester_id && ['実行前', '終了確認'].include?(@quest.status) %>
+    <%= form_with(url: update_status_quest_messages_path(quest_id: @quest.id), method: :post) do |form| %>
+      <%= form.hidden_field :new_status, value: "未着手" %>
+      <%= form.submit "Change status to 未着手" %>
+    <% end %>
+    <%= form_with(url: update_status_quest_messages_path(quest_id: @quest.id), method: :post) do |form| %>
+      <%= form.hidden_field :new_status, value: "終了" %>
+      <%= form.submit "Change status to 終了" %>
+    <% end %>
+  <% end %>
+  
+  
+  
   <div>
     <% @messages.each do |message| %>
       <p><strong><%= message.sender.email %>:</strong> <%= message.content %></p>

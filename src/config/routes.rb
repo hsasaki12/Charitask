@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # config/routes.rb
 Rails.application.routes.draw do
   get 'accounts/show'
@@ -18,6 +16,8 @@ Rails.application.routes.draw do
       post 'accept', to: 'status#accept'
     end
 
-    resources :messages, only: %i[index create]
+    resources :messages, only: %i[index create] do
+      post 'update_status', on: :collection  # ここを追加
+    end
   end
 end
