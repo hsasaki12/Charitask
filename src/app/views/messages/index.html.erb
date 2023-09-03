@@ -5,25 +5,19 @@
   
   
   <!-- ステータス更新用のボタン -->
-  <% if current_user.id == @quest.acceptor_id && ['実行前', '処理中'].include?(@quest.status) %>
-    <%= form_with(url: update_status_quest_messages_path(quest_id: @quest.id), method: :post) do |form| %>
-      <%= form.hidden_field :new_status, value: "処理中" %>
-      <%= form.submit "Change status to 処理中" %>
-    <% end %>
-    <%= form_with(url: update_status_quest_messages_path(quest_id: @quest.id), method: :post) do |form| %>
-      <%= form.hidden_field :new_status, value: "終了確認" %>
-      <%= form.submit "Change status to 終了確認" %>
-    <% end %>
-  <% elsif current_user.id == @quest.requester_id && ['実行前', '終了確認'].include?(@quest.status) %>
-    <%= form_with(url: update_status_quest_messages_path(quest_id: @quest.id), method: :post) do |form| %>
-      <%= form.hidden_field :new_status, value: "未着手" %>
-      <%= form.submit "Change status to 未着手" %>
-    <% end %>
-    <%= form_with(url: update_status_quest_messages_path(quest_id: @quest.id), method: :post) do |form| %>
-      <%= form.hidden_field :new_status, value: "終了" %>
-      <%= form.submit "Change status to 終了" %>
-    <% end %>
+  <% if current_user.id == @quest.acceptor_id %>
+  <% if @quest.status == "実行前" %>
+    <%= button_to "Change Status to 処理中", update_status_quest_messages_path(@quest, new_status: "処理中"), method: :post %>
+  <% elsif @quest.status == "処理中" %>
+    <%= button_to "Change Status to 終了確認", update_status_quest_messages_path(@quest, new_status: "終了確認"), method: :post %>
   <% end %>
+<% elsif current_user.id == @quest.requester_id %>
+  <% if @quest.status == "実行前" %>
+    <%= button_to "Change Status to 未着手", update_status_quest_messages_path(@quest, new_status: "未着手"), method: :post %>
+  <% elsif @quest.status == "終了確認" %>
+    <%= button_to "Change Status to 終了", update_status_quest_messages_path(@quest, new_status: "終了"), method: :post %>
+  <% end %>
+<% end %>
   
   
   

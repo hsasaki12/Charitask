@@ -41,30 +41,25 @@ end
 
 
 def update_status
-  @quest = Quest.find(params[:quest_id])
-
   new_status = params[:new_status]
-
-  if current_user.id == @quest.acceptor_id
-    if @quest.status == "実行前" && new_status == "処理中"
-      @quest.update!(status: "処理中")
-    elsif @quest.status == "処理中" && new_status == "終了確認"
-      @quest.update!(status: "終了確認")
-    else
-      # 不正なステータス更新の場合
-    end
-  elsif current_user.id == @quest.requester_id
-    if @quest.status == "実行前" && new_status == "未着手"
-      @quest.update!(status: "未着手")
-    elsif @quest.status == "終了確認" && new_status == "終了"
-      @quest.update!(status: "終了")
-    else
-      # 不正なステータス更新の場合
-    end
-  else
-    # 権限なし
+  
+  # ステータス変更のロジック
+  # ここに適切なロジックを書いて、ステータスを変更
+  if (current_user.id == @quest.acceptor_id && ["実行前", "処理中"].include?(@quest.status)) ||
+     (current_user.id == @quest.requester_id && ["実行前", "終了確認"].include?(@quest.status))
+    @quest.update(status: new_status)
+    
+    # ステータス変更のメッセージを生成
+    message = Message.new(
+      sender_id: current_user.id,
+      receiver_id: (current_user.id == @quest.acceptor_id ? @quest.requester_id : @quest.acceptor_id),
+      content: "Status changed to #{new_status}",
+      quest_id: @quest.id
+    )
+    
+    message.save
   end
-
+  
   redirect_to quest_messages_path(@quest)
 end
   private
